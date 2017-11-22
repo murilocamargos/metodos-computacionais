@@ -1,2 +1,3 @@
-# metodos-computacionais
-Trabalhos práticos da disciplina de métodos computacionais
+# Métodos Computacionais
+Trabalhos práticos da disciplina de métodos computacionais da Unimontes.
+Instrutor: Ricardo Fariello
