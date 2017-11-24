@@ -1,0 +1,108 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\author{Murilo Camargos}
+\title{Métodos Computacionais - Lista 3}
+\begin{document}
+\lstset{extendedchars=true, inputencoding=latin1,literate=
+{á}{{\'a}}1
+{à}{{\`a}}1
+{ã}{{\~a}}1
+{é}{{\'e}}1
+{ê}{{\^e}}1
+{í}{{\'i}}1
+{ó}{{\'o}}1
+{õ}{{\~o}}1
+{ú}{{\'u}}1
+{ü}{{\"u}}1
+{ç}{{\c{c}}}1}
+\lstset{language=Matlab,%
+    %basicstyle=\color{red},
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},
+    extendedchars=true,
+    inputencoding=latin1, 
+}
+
+
+	\section{Uma versão da equação de Rayleigh (23/11/2017)}
+	
+	Vamos escrever a equação de Rayleigh na forma: \[A_0R(t)R''(t)+A_1(R'(t))^2 = -A_2\]
+	Dividindo através do coeficiente principal $A_0$, obtemos a forma normal: \[R(t)R''(t)+\alpha(R'(t))^2 = -\beta\hspace{1cm}\alpha=\frac{A_1}{A_0},\beta=\frac{A_2}{A_0}\]
+	Esta equação pode ser integrada uma vez; a primeira integral é:
+	\begin{equation}
+		(R'(t))^2 = -\frac{\beta}{\alpha} + \kappa(R(t))^{-2\alpha}
+		\label{eq:1}
+	\end{equation}
+	em que $k$ é uma constante arbitrária de integração. Uma abordagem útil para uma solução é usar o método da transformação de \textbf{Sundman}. O truque padrão é estabelecer:
+	\[R = V^\epsilon, \hspace{0.2cm} R^\delta d\tau = dt\]
+	para que possamos obter a seguinte equação:
+	\[(V'(\tau))^2 = \frac{\kappa(V(\tau))^{-2\alpha\epsilon+2\delta\epsilon-2\epsilon+2}}{\epsilon^2} - \frac{\beta(V(\tau))^{2\delta\epsilon-2\epsilon+2}}{\alpha\epsilon^2}\]
+	Soluções formais para este tipo de problema são encontradas apenas para casos em que o lado direito é um polinômio no máximo de ordem 4. Uma possibilidade simples é fazer $\epsilon=\frac{1}{2\alpha}$ e $\delta=2\alpha+1$. A equação acima é facilmente reescrita como:
+	\[(V'(\tau))^2 = 4\alpha^2\kappa(V(\tau))^3 - 4\alpha\beta(V(\tau))^4\]
+	Esta equação é conhecido por \textbf{Eq. de Briot-Bouquet} e integrando, temos a solução geral:
+	\[V(\tau) = \frac{\alpha\kappa}{\beta+\alpha^3\kappa^2(\tau-\tau_0)^2}\]
+	em que $\tau_0$ é uma segunda constante arbitrária. Com isso, obtemos a solução geral de $R$ em forma paramétrica:
+	\[R(\tau) = \left(\frac{\alpha\kappa}{\beta+\alpha^3\kappa^2(\tau-\tau_0)^2}\right)^2, \hspace{1cm} t(\tau) = \int_0^\tau{(R(z))^{2\alpha+1} dz}\]
+	A integral para $t$ pode ser obtida de forma analítica gerando uma expressão em termos de funções hipergeométricas
+	\[t=\alpha^b\beta^{-b}\kappa^b\left(\mathcal{J}_1(\tau-\tau_0) - \mathcal{J}_2\tau_0\right)\]
+	em que $b=1+\frac{1}{2\alpha}$; $\mathcal{J}_1$ e $\mathcal{J}_2$ são as funções hipergeométricas, dadas por:
+	\[\mathcal{J}_1 = \prescript{}{2}{F}_1\left(\frac{1}{2}, b, \frac{3}{2}, -\frac{\alpha^3\kappa^2(\tau-\tau_0)^2}{\beta}\right), \hspace{1cm} \mathcal{J}_2 = \prescript{}{2}{F}_1\left(\frac{1}{2}, b, \frac{3}{2}, -\frac{\alpha^3\kappa^2\tau_0^2}{\beta}\right)\]
+	Usando esse resultado, e resolvendo a primeira equação paramétrica para $\tau$ em termos de $R$, temos a dependência de $t$ em $R$:
+	\[t=\alpha^b\beta^{-b}\kappa^b\left(\mathcal{J}_1\frac{\sqrt{R^{-2\alpha}-\frac{\beta}{\alpha\kappa}}}{\alpha\sqrt{\kappa}} - \mathcal{J}_2\tau_0\right)\]
+	em que, agora, $\mathcal{J}_1 = \prescript{}{2}{F}_1\left(\frac{1}{2}, b, \frac{3}{2}, 1-\frac{\alpha\kappa R^{-2\alpha}}{\beta}\right)$. O tempo de colapso $t_c$ é encontrado separando as variáveis $dR$ e $dT$ em (\ref{eq:1}) e, posteriormente, integrando:
+	\begin{equation}
+		t_c=\frac{\sqrt{\alpha}}{\sqrt{\beta}} \frac{B\left(\frac{\alpha+1}{2\alpha},\frac{1}{2}\right)}{2\alpha} R(0)
+		\label{eq:2}
+	\end{equation}
+    em que $B(\cdot,\cdot)$ é a integral Beta e a eq. (\ref{eq:2}) só vale para quando $V'(0)=0$;
+    
+    \subsection{Atividade}
+    \textbf{Encontrado a eq. (\ref{eq:1}).} Tratando $R(t)$ como termo independente, podemos chamar:
+    \[\frac{dR(t)}{dt} = u(R) \rightarrow \frac{d^2R(t)}{dt^2} = \frac{d}{dt}\left(u(R)\right) = \frac{du(R)}{dR}\frac{dR}{dt} = u(R)\frac{du(R)}{dR}\]
+    Substituindo na eq. (\ref{eq:1}), temos:
+    \[Ru(R)\frac{du(R)}{dR} + \alpha(u(R))^2 = -\beta\]
+    podemos resolver esta equação separando os termos dependentes dos independentes:
+    \[\frac{du(R)}{dR} = \frac{-\beta-\alpha(u(R))^2}{u(R)R} \rightarrow \frac{dR}{R} = \frac{u}{-\beta-\alpha u^2}du\]
+    integrando os dois lados temos:
+    \[\log{R} + c_0 = -\frac{1}{2\alpha}\log{\left(-\beta-\alpha u^2\right)} \rightarrow c_1 R = \left(-\beta-\alpha u^2\right)^{-\frac{1}{2\alpha}}\]
+    substituindo $u(R)$, temos:
+    \[\left(c_1 R(t)\right)^{-2\alpha} = -\beta-\alpha \left(\frac{dR(t)}{dt}\right)^2 \rightarrow (R'(t))^2 = -\frac{\beta}{\alpha} - \frac{1}{\alpha}(c_1R(t))^{-2\alpha}\]
+    \[(R'(t))^2 = -\frac{\beta}{\alpha} + \kappa(R(t))^{-2\alpha}\]
+    em que $\kappa = \frac{c_1^{-2\alpha}}{\alpha}$.
+    
+    \section{Exercícios}
+    Considere o problema de Cauchy para a equação $R'(t)^2 = \frac{-\beta}{\alpha} + \kappa R(t)^{-2\alpha}$ com os dados iniciais $R(0)=1$, $R'(0)=0$. Fazendo uso desses valores na análise feita na aula, encontramos $\kappa=\frac{\beta}{\alpha}$ e $\tau_0=0$. Uma vez que $\kappa$ e $\tau_0$ são determinados, a solução em forma fechada torna-se
+    \[t=\frac{\sqrt{R^{-2\alpha}-1} \prescript{}{2}{F}_1\left(\frac{1}{2}, b, \frac{3}{2}, 1-R^{-2\alpha}\right)}{\sqrt{\alpha}\sqrt{\beta}}, \hspace{1cm} b=1+\frac{1}{2\alpha}\]
+    em que
+    \[\prescript{}{2}{F}_1\left(a,b,c,z\right) = \frac{\Gamma(c)}{\Gamma(b)\Gamma(c-b)}\int_0^1\zeta^{b-1}(1-\zeta z)^{-a}(1-\zeta)^{-b+c-1}d\zeta \]
+    Fala o gráfico de $R$ versus $t$ para $\alpha=1.2386$ e $\beta=0.0058149$. Calcule o tempo de colapso através da fórmula dada, considerando que:
+    \[\frac{B\left(\frac{\mu}{\lambda},\nu\right)}{\lambda} = \int_0^1 x^{\mu-1}\left(1-x^\mu\right)^{\nu-1}dx\]
+    Em seguida, compare os resultados com a solução numérica do problema da bolha, feito na lista 2.
+    
+    \section{Resolução}
+    
+\end{document}
