@@ -10,7 +10,7 @@ Pv = 0.166391;
 el = 4.34802;
 ev = 1.79634;
 
-h = 0.1;
+h = 0.01;
 x0 = [1 0.0001];
 tmin = 0;
 
@@ -33,30 +33,23 @@ xlabel('Tempo (s)');
 ylabel('Variável medida');
 grid on;
 legend('Raio', 'Velocidade');
-hold off
 
-h = 0.1;
-R = @(x) sqrt(a*k./(b + a^3*k^3*(x - t0).^2));
+%% Calculo dos valores das equações paramétricas
+R = @(x) sqrt(a*k./(b + a^3*k^2*(x - t0).^2));
 t = @(tau) chebyshev(@(x) (R(x)).^(2*a+1), 0, tau, 22);
-tau = 0;
+
+tau = 0:1000;
 ts = [];
-rs = [];
-while 1
-    rs(end+1) = R(tau);
+rs = R(tau);
+for tau = tau
     ts(end+1) = t(tau);
-    tau = tau + h;
-    if ts(end) > tmax
-        break
-    end
 end
+plot(ts,rs)
 
 
-% R = @(tau) sqrt(a*k./(b + a^3*k^2*(tau - t0).^2));
-% F21 = @(a,b,c,z) gamma(c)/(gamma(b)*gamma(c-b)) * double(int(x^(b-1)*(1-z*x)^(-a)*(1-x)^(-b+c-1), x, 0, 1));
-% t = @(tau) F21(0.5, 1+1/(2*a), 3/2, 1-R(tau)^(-2*a)) * sqrt(R(tau)^(-2*a) - 1)/(sqrt(a)*sqrt(b));
+% F21 = @(a,b,c,z) gamma(c)/(gamma(b)*gamma(c-b)) * chebyshev(@(x) x.^(b-1).*(1-z*x).^(-a).*(1-x).^(-b+c-1), eps, 1-eps, 22);
+% T = @(R) (sqrt(R^(-2*a) - 1) * F21(0.5, 1+1/(2*a), 1.5, 1-R^(-2*a)))/(sqrt(a)*sqrt(b));
 % ts = [];
-% rs = [];
-% for i = 0:1000
-%     rs(end+1) = R(tau);
-%     ts(end+1) = t(tau);
+% for i=eps:0.01:1-eps
+%     ts(end+1) = T(i);
 % end
