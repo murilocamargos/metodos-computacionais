@@ -109,4 +109,33 @@
 	\[I_3=\frac{2}{7}\hgf{2}{\frac{7}{2}}{\frac{9}{2}}{\prt{R(t)}^2} = \int_0^1{\frac{\zeta^{5/2}}{\prt{1-\zeta R'(t)}^2}d\zeta}\]
 	\[I_4=\frac{2}{5}\hgf{2}{\frac{5}{4}}{\frac{9}{4}}{\prt{R(t)}^2} = \frac{1}{2}\int_0^1{\frac{\zeta^{1/4}}{\prt{1-\zeta R'(t)}^2}d\zeta}\]
 	
+	\newpage
+	\section{Resolução}
+	Os testes foram feitos no Matlab e foram utilizadas as funções já criadas nos exercícios anteriores.
+	\subsection{Exercício 1}
+	Na primeira equação, por haver velocidade inicial considerável, o gráfico descreve o formato de uma parábola. Para a resolução desta questão, foi utilizado um passo igual a $0.01$ no Runge-Kutta de quarta ordem e o valor do tempo de colapso (aproximadamente \textbf{6.01}) foi encontrado por tentativa e erro.
+	
+	\begin{figure}[h!]
+    \centering
+      \includegraphics[width=1\linewidth]{figures/eq1-h0-01-t-6-01.eps}
+      \caption{Raio e velocidade da bolha ao longo do tempo para o exercício 1.}
+      \label{fig:raio1}
+	\end{figure}
+	
+	\subsection{Exercício 2}
+	Para a segunda equação, foi utilizado um passo também igual a $0.01$ no Runge-Kutta de quarta ordem e o valor do tempo de colapso (aproximadamente \textbf{4.14}) foi encontrado por tentativa e erro.
+	
+	\begin{figure}[h!]
+    \centering
+      \includegraphics[width=1\linewidth]{figures/eq2-h0-01-t-4-14.eps}
+      \caption{Raio e velocidade da bolha ao longo do tempo para o exercício 2.}
+      \label{fig:raio2}
+	\end{figure}
+    
+    \newpage
+    \subsection{Código em MATLAB}
+    \lstinputlisting[language=matlab]{code/bolha_geral.m}
+    \subsection{Código da função hipergeométrica 2F1}
+    \lstinputlisting[language=matlab]{../tools/hg2F1.m}
+	
 \end{document}
