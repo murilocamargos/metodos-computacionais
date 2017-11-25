@@ -14,7 +14,7 @@
 \definecolor{mylilas}{RGB}{170,55,241}
 
 \author{Murilo Camargos}
-\title{Métodos Computacionais - Lista 3}
+\title{Métodos Computacionais - Aula 3}
 \begin{document}
 \lstset{extendedchars=true, inputencoding=latin1,literate=
 {á}{{\'a}}1
@@ -48,7 +48,7 @@
 }
 
 
-	\section{Uma versão da equação de Rayleigh (23/11/2017)}
+	\section{(Nossa versão da) Equação de Rayleigh (23/11/2017)}
 	
 	Vamos escrever a equação de Rayleigh na forma: \[A_0R(t)R''(t)+A_1(R'(t))^2 = -A_2\]
 	Dividindo através do coeficiente principal $A_0$, obtemos a forma normal: \[R(t)R''(t)+\alpha(R'(t))^2 = -\beta\hspace{1cm}\alpha=\frac{A_1}{A_0},\beta=\frac{A_2}{A_0}\]
@@ -66,7 +66,10 @@
 	Esta equação é conhecido por \textbf{Eq. de Briot-Bouquet} e integrando, temos a solução geral:
 	\[V(\tau) = \frac{\alpha\kappa}{\beta+\alpha^3\kappa^2(\tau-\tau_0)^2}\]
 	em que $\tau_0$ é uma segunda constante arbitrária. Com isso, obtemos a solução geral de $R$ em forma paramétrica:
-	\[R(\tau) = \left(\frac{\alpha\kappa}{\beta+\alpha^3\kappa^2(\tau-\tau_0)^2}\right)^{\frac{1}{2}}, \hspace{1cm} t(\tau) = \int_0^\tau{(R(z))^{2\alpha+1} dz}\]
+	\begin{equation}
+	R(\tau) = \left(\frac{\alpha\kappa}{\beta+\alpha^3\kappa^2(\tau-\tau_0)^2}\right)^{\frac{1}{2\alpha}}, \hspace{1cm} t(\tau) = \int_0^\tau{(R(z))^{2\alpha+1} dz}
+		\label{eq:3}
+	\end{equation}
 	A integral para $t$ pode ser obtida de forma analítica gerando uma expressão em termos de funções hipergeométricas
 	\[t=\alpha^b\beta^{-b}\kappa^b\left(\mathcal{J}_1(\tau-\tau_0) - \mathcal{J}_2\tau_0\right)\]
 	em que $b=1+\frac{1}{2\alpha}$; $\mathcal{J}_1$ e $\mathcal{J}_2$ são as funções hipergeométricas, dadas por:
@@ -103,6 +106,23 @@
     \[\frac{B\left(\frac{\mu}{\lambda},\nu\right)}{\lambda} = \int_0^1 x^{\mu-1}\left(1-x^\mu\right)^{\nu-1}dx\]
     Em seguida, compare os resultados com a solução numérica do problema da bolha, feito na lista 2.
     
+    \newpage
     \section{Resolução}
+    Utilizando a fórmula dada e as constantes do problema, o tempo de colapso é dado por:
+    \[t_c=\mathbf{12.545156305897644}\]
+    
+    O gráfico abaixo mostra o raio da bolha ao longo do tempo, calculado tanto pela abordagem numérica, utilizando Runge-Kutta de quarta ordem, quanto pela abordagem da aula atual, utilizando as equações paramétricas dadas por (\ref{eq:3}). Este gráfico foi feito com o auxílio do Matlab e as duas funções criadas nas últimas aulas foram utilizadas como ferramenta, a \textbf{rk4} e a \textbf{chebyshev}.
+    
+    \begin{figure}[h!]
+    \centering
+      \includegraphics[width=0.8\linewidth]{figures/numanl.eps}
+      \caption{Raio da bolha ao longo do tempo.}
+      \label{fig:raio}
+	\end{figure}
+    
+    \newpage
+    \subsection{Código em MATLAB}
+    \lstinputlisting[language=matlab]{code/bolha_colapso.m}
+    
     
 \end{document}

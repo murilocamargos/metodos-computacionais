@@ -22,7 +22,7 @@ x = rk4(f, h, x0, [tmin tmax]); % Resolve sistema f usando Runge-Kutta de quarta
 hold on
 plot(tmin:h:tmax, x(:, 1));
 plot(tmin:h:tmax, x(:, 2));
-xlabel('Tempo (s)');
+xlabel('Tempo');
 ylabel('Variável medida');
 grid on;
 legend('Raio', 'Velocidade');
