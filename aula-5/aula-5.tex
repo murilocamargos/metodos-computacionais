@@ -1,0 +1,120 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{esint}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\newcommand{\prt}[1]{\left(#1\right)}
+\newcommand{\col}[1]{\left[#1\right]}
+\newcommand{\chv}[1]{\left\{#1\right\}}
+\newcommand{\hgf}[4]{\prescript{}{2}{F}_1\left(#1,#2,#3,#4\right)}
+
+\author{Murilo Camargos}
+\title{Métodos Computacionais - Aula 4}
+\begin{document}
+\lstset{extendedchars=true, inputencoding=latin1,literate=
+{á}{{\'a}}1
+{à}{{\`a}}1
+{ã}{{\~a}}1
+{é}{{\'e}}1
+{ê}{{\^e}}1
+{í}{{\'i}}1
+{ó}{{\'o}}1
+{õ}{{\~o}}1
+{ú}{{\'u}}1
+{ü}{{\"u}}1
+{ç}{{\c{c}}}1}
+\lstset{language=Matlab,%
+    %basicstyle=\color{red},
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},
+    extendedchars=true,
+    inputencoding=latin1, 
+}
+
+	\section{Comparação entre formas fortes e fracas}
+
+	Duas são as formas principais de resolução de problemas descritos por equações diferenciais parciais: a forma forte e a forma fraca. A forma forte consiste na resolução direta das equações que representam o problema físico e suas condições de contorno. A forma fraca, por sua vez, é um aperfeiçoamento dos métodos numéricos aproximados que são representações integrais das equações governantes de um problema físico.
+	
+	Existem duas grandes categorias de princípios usados para a construção de formas fracas: os métodos variacional e residual. Para uma equação diferencial de ordem $2k$, a forma forte requer continuidade de ordem $2k$ da solução, enquanto a forma fraca requer, geralmente, continuidade de ordem $k$. Um exemplo de um método numérico usado como ferramenta de análise para problemas regidos pela formulação forte é o amplamente conhecido método das diferenças finitas (MDF). Mais geral que o MDF é o método dos elementos finitos, que é baseado em cima da formulação fraca. Embora ambos os métodos sejam robustos, eles necessitam de uma malha. Em contraste, os chamados métodos sem malha são caracterizados pelo uso de um conjunto de nós espalhados pelo domínio do problema.
+
+	A resolução pela forma forte nem sempre é possível. Há, no entanto, casos especiais em que a obteção de soluções por métodos exatos é simples. Consideremos, a título de exemplo, a equação de Poisson: \[\nabla^2 u = p(x,y),\] em que $p(x,y)$ representa a fonte arbitrária. Introduzindo a variável complexa $z=x+iy$ e considerando seu conjugado $\bar{z}=x-iy$, pode-se expressar o Laplaciano como: \[\nabla^2 u = \partial_{xx}u+\partial_{yy}u = 4\partial_{z\bar{z}} u.\] Depois de realizada a mudança de variável na fonte, encontra-se a equação: \[\nabla^2u=4\partial_{z\bar{z}}u=p(z,\bar{z}).\] Com esta equação, estabelece-se uma solução imediata, a qual pode ser alcançada simplesmente por dupla integração do termo fonte: \[u(z,\bar{z}) = \frac{1}{4}\int{\int{p(z,\bar{z})dzd\bar{z}}} + u_1(\bar{z}) + u_2(z).\] Nesta equação, $u_1(\bar{z})$ e $u_2(z)$ representam o espaço nulo do operador Laplaciano, pois \[\nabla^2\prt{u_1(\bar{z})+u_2(z)} = 0.\] Para casos em que a geometria do domínio não representa um problema para a aplicação das condições de contorno, a solução acima é a solução final do problema.
+
+	Desenvolvamos, agora, as expressões para a forma fraca. Fomar fracas globais envolvem integrais sobre o domínio global e fronteiras, enquanto formas fracas locais são construídas ao longo de subdomínios locais com fronteiras locais. Consideramos o problema de velor de contorno para a equação de Poisson:
+	\begin{equation}
+		\nabla^2u=p\hspace{0.4cm}\text{em}\hspace{0.4cm} \Omega
+		\label{eq:1}
+	\end{equation}
+	sejeito às condições de contorno:
+	\begin{subequations}
+		\begin{equation}
+			u = \bar{u}\hspace{0.4cm}\text{em}\hspace{0.4cm} \Gamma_u,
+			\label{eq:2a}
+		\end{equation}
+		\begin{equation}
+			\hat{n}\cdot\nabla u = \bar{q}\hspace{0.4cm}\text{em}\hspace{0.4cm} \Gamma_q,
+			\label{eq:2b}
+		\end{equation}
+	\end{subequations}
+	em que $\Gamma=\Gamma_u\cup\Gamma_q$ é a fronteira da região $\Omega$ e $\hat{n}$ é a direção normal para fora da fronteira $\Gamma$. Consideremos tais formulações fracas da equação diferencial (\ref{eq:1}).
+
+	Uma formulação fraca não simétrica global do problema pode ser escrita com o uso do método dos resíduos ponderados (ou método de Galerkin):
+	\begin{equation}
+		\int_\Omega \prt{\nabla^2\tilde{u} - p}\cdot vd\Omega = 0
+		\label{eq:3}
+	\end{equation}
+	na qual $\tilde{u}$ é a solução aproximada da equação (\ref{eq:1}) (a ser resolvida numéricamente) e $v$ é a função teste. Esta formulação requer que $\tilde{u}$ seja pelo menos de classe $C^1$, enquanto $v$ pode ser descontínua. Após aplicarmos, na equação (\ref{eq:3}), a identidade \[\nabla\cdot\prt{v\nabla\tilde{u}} = v\nabla^2\tilde{u} + \nabla v\nabla\tilde{u}\] e usarmos o teorema da divergência \[\int_\Omega\nabla\cdot\vec{v} d^3x = \oiint_{\partial\Omega}\vec{v}\hat{n}d\sigma,\] obtemos a seguinte forma fraca simétrica global:
+	\begin{equation}
+		\int_\Gamma v\hat{n}\cdot\nabla\tilde{u} d\Gamma - \int_\Omega\prt{\nabla v\cdot\nabla\tilde{u}+vp}d\Omega - \alpha\int_{\Gamma_u} v\prt{\tilde{u}-\bar{u}}d\Gamma = 0,
+		\label{eq:4}
+	\end{equation}
+	em que $\alpha\gg 1$ é o fator de penalidade, o qual é usado para impor as condições de contorno essenciais (\ref{eq:2a}).
+
+	Essa formulação requer que ambos $\tilde{u}$ e $v$ sejam de classe $C^0$. Ao impor as condições de contorno naturais (\ref{eq:2b}), a equação (\ref{eq:4}) fica na forma:
+	\begin{equation}
+		\int_{\Gamma_u} v\hat{n}\cdot\nabla\tilde{u} d\Gamma +\int_{\Gamma_q} v\bar{q}d\Gamma - \int_\Omega\prt{\nabla v\cdot\nabla\tilde{u}+vp}d\Omega = \alpha\int_{\Gamma_u} v\prt{\tilde{u}-\bar{u}}d\Gamma.
+		\label{eq:5}
+	\end{equation}
+	Agora, usando a identidade \[v\nabla^2\tilde{u} = \nabla\cdot(v\nabla\tilde{u}) - \nabla\cdot(\tilde{u}\nabla v) + \tilde{u}\nabla^2v,\] e o teorema da divergência na equação \ref{eq:3}, obtemos outra forma fraca não simétrica global:
+	\begin{equation}
+		\int_{\Gamma} v\hat{n}\cdot\nabla\tilde{u}\Gamma - \int_{\Gamma} \tilde{u}\hat{n}\cdot\nabla vd\Gamma + \int_\Omega \tilde{u}\nabla^2vd\Omega - \int_\Omega vpd\Omega = 0.
+		\label{eq:6}
+	\end{equation}
+	Essa formulação requer que $v$ seja pelo menos de classe $C^1$, enquanto $\tilde{u}$ pode ser descontínua. Entrando com as condições de contorno temos:
+	\begin{equation}
+		\int_{\Gamma_u} v\hat{n}\cdot\nabla\tilde{u}\Gamma + \int_{\Gamma_q}v\bar{q}d\Gamma - \int_{\Gamma_u} \tilde{u}\hat{n}\cdot\nabla vd\Gamma - \int_{\Gamma_q} \tilde{u}\hat{n}\nabla vd\Gamma + \int_\Omega \tilde{u}\nabla^2vd\Omega - \int_\Omega vpd\Omega = 0.
+		\label{eq:7}
+	\end{equation}
+	Muitos métodos numéricos sem malha, tais como o método de Galerkin livre de elementos, são baseados em formas fracas globais que se assemelham àquelas apresentadas (Equações \ref{eq:3} a \ref{eq:7}). Em contraste, por exemplo, o método de Petrov-Galerkin local decorre de uma forma fraca ao longo de um subdomínio $\Omega_s$ dentro do domínio global $\Omega$.
+
+	\section{Exercícios}
+	Use a equação de Galerkin para determinar $\alpha$ de modo que $\tilde{u}$ seja uma solução aproximada do problema de valor de contorno
+	\[-\nabla^2u=c, \hspace{0.5cm} 0<x<a, \hspace{0.5cm} 0<y<b,\]
+	tal que $u=0$ em $x=0$, $a$ e $y=0,b$. As soluções aproximadas são as seguintes:
+	1. \[\tilde{u}(x,y) = \alpha\phi(x,y) = \alpha xy(x-a)(y-b)\]
+	2. \[\tilde{u}_N(x,y) = \sum_{i,k=1}^N \alpha_{ik}\phi_{ik}(x,y) = \sum_{i,k=1}^N\alpha_{ik}\sin{\frac{i\pi x}{a}}\sin{\frac{k\pi y}{b}}\]
+	3. \[\tilde{u}_N(x,y) = \sum_{i,k=1}^N \alpha_{ik}\phi_{ik}(x,y) = \sum_{i,k=1}^N\alpha_{ik}(x-a)(y-b)x^iy^k\]
+	onde $\phi$ é a função teste (função $v$ no texto) da técnica de Galerkin.
+	
+\end{document}
