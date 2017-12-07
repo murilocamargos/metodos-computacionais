@@ -1,0 +1,136 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{esint}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\newcommand{\prt}[1]{\left(#1\right)}
+\newcommand{\col}[1]{\left[#1\right]}
+\newcommand{\chv}[1]{\left\{#1\right\}}
+\newcommand{\hgf}[4]{\prescript{}{2}{F}_1\left(#1,#2,#3,#4\right)}
+
+\author{Murilo Camargos}
+\title{Métodos Computacionais - Aula 6}
+\begin{document}
+\lstset{extendedchars=true, inputencoding=latin1,literate=
+{á}{{\'a}}1
+{à}{{\`a}}1
+{ã}{{\~a}}1
+{é}{{\'e}}1
+{ê}{{\^e}}1
+{í}{{\'i}}1
+{ó}{{\'o}}1
+{õ}{{\~o}}1
+{ú}{{\'u}}1
+{ü}{{\"u}}1
+{ç}{{\c{c}}}1}
+\lstset{language=Matlab,%
+    %basicstyle=\color{red},
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},
+    extendedchars=true,
+    inputencoding=latin1, 
+}
+
+	\section{Método de Separação de Variáveis}
+	Dentre os diversos métodos de resolução de equações a derivadas parciais aquele que encontra emprego mais frequentemente em aplicações é o chamado método de separação de variáveis. Quer a sorte que muitas equações de interesse em nosso curso pertencem à classe de equações para as quais esse método é eficaz. Uma segunda vantagem desse método reside no fato de o mesmo transformar um problema de equação a derivadas parciais em uma série de problemas de equações diferenciais ordinárias, sobre as quais muito mais é conhecido, especialmente no que concerne a métodos de solução. Vamos ilustrar o emprego do método de separação de variáveis no tratamento de uma equação a derivadas parciais linear e homogênea de segunda ordem em duas variáveis reais, digamos $x$ e $y$, definidas em um certo domínio $\mathbb{R}^2$. Seja a equação a derivadas parciais linear e homogênea da forma:
+	\begin{equation}
+		A(x)\partial_{xx}u + B(y)\partial_{yy}u + C(x)\partial_x u + D(y)\partial_y u + (E(x)+F(y)) u = 0,
+		\label{eq:1}
+	\end{equation}
+	sendo que ou $A$ ou $B$ não é identicamente nula, a ser satisfeita por uma função incógnita de duas variáveis $u(x,y)$. Como claramente indicado acima, as funções $A$, $C$, e $E$ são funções de uma única variável, a saber $x$, enquanto que $B$, $D$ e $F$ são funções de uma única variável, a saber $y$.
+	
+	O método de separação de variáveis consiste em procurar soluções particulares para a equação~(\ref{eq:1}) que sejam da forma
+	\begin{equation}
+		u(x,y)\coloneqq X(x)Y(y).
+		\label{eq:1.1}
+	\end{equation}
+	
+	Antes de fazermos perguntas sobre a aplicabilidade dessa ideia, vejamos a que a mesma conduz. Inserindo o Ansatz~(\ref{eq:1.1}) na equação~(\ref{eq:1}), obtém-se:
+	\begin{equation}
+		\small
+		A(x)X''(x)Y(y) + B(y)Y''(y)X(x) + C(x)X'(x)Y(y) + D(y)Y'(y)X(x) + (E(x)+F(y))(X(x)Y(y)) = 0,
+		\label{eq:2}
+	\end{equation}
+	dividindo-se a equação~\ref{eq:2} por $X(x)Y(y)$, obtém-se:
+		\begin{equation}
+		A(x)\frac{X''(x)}{X(x)} + B(y)\frac{Y''(y)}{Y(y)} + C(x)\frac{X'(x)}{X(x)} + D(y)\frac{Y'(y)}{Y(y)} + (E(x)+F(y)) = 0.
+		\label{eq:3}
+	\end{equation}
+	
+	Aqui, é de se observar que cada termo da expressão acima é função de uma única variável. Separando os termos que dependem de cada variável em cada lado da igualdade, obtém-se da última expressão:
+	\begin{equation}
+		A(x)\frac{X''(x)}{X(x)} + C(x)\frac{X'(x)}{X(x)} + E(x) = -\left(D(y)\frac{Y'(y)}{Y(y)} + B(y)\frac{Y''(y)}{Y(y)} + F(y)\right).
+		\label{eq:4}
+	\end{equation}
+	
+	Chegamos agora ao ponto crucial que justifica o que foi feito até aqui. Do lado esquerdo da igualdade acima encontra-se uma função que depende apenas de $x$ e do lado direito, uma função que depende apenas de $y$. Ora, como ambas as variáveis são independentes, uma tal igualdade só é possível se ambos os lados foram iguais a uma mesma constante, que denotaremos por $\lambda$, a qual é denominada constante de separação. Assim,
+		\begin{equation}
+		A(x)\frac{X''(x)}{X(x)} + C(x)\frac{X'(x)}{X(x)} + E(x) = -\left(D(y)\frac{Y'(y)}{Y(y)} + B(y)\frac{Y''(y)}{Y(y)} + F(y)\right) = \lambda,
+		\label{eq:5}
+	\end{equation}
+	o que implica o par de equações desacopladas:
+	\begin{equation}
+		\begin{cases}
+			A(x)X''(x) + C(x)X'(x) + (E(x)-\lambda)X(x) = 0\\
+			B(y)Y''(y) + D(y)Y'(y) + (F(y)+\lambda)Y(y) = 0,
+		\end{cases}
+	\end{equation}
+	cada qual sendo uma equação diferencial ordinária. Ambas as equações podem agora, em princípio, ser tratadas separadamente com os métodos de solução disponíveis para equações diferenciais ordinárias lineares. É de se lembrar, porém, que ambas as equações não são totalmente independentes, por têm em comum a presença da mesma constante de separação ainda indeterminada $\lambda$. Em muitos problemas as constantes de separação desempenham o papel de autovalores de operadores diferenciais. \textbf{Um pouco de experimentação permite concluir que a separação dificilmente se dá caso haja na equação um termo com uma derivada mista $\partial_{xy}u$, ou se as funções $A$, $B$, ..., $F$ não forem funções de uma única variável especificamente, como explicitado em \ref{eq:1}, mas há exceções}.
+	
+	Igualmente, não é de conhecimento do Ricardo que tenham sido determinadas classes gerais de equações a derivadas parciais não-lineares para as quais o método de separação de variáveis seja eficaz. \textbf{A aplicabilidade desse método é, portanto, mais uma matéria de arte que de ciência}, mas considerações sobre simetrias são, por sua vez, de grande utilidade.
+	
+	\textbf{O que determina a constante de separação $\lambda$?} Em situações típicas ela é determinada pela imposição de condições de contorno, ou de outras condições subsidiárias à solução, tais como que ela seja contínua, ou que ela seja periódica, ou que ela seja limitada, ou que ela seja de quadrado integrável (o que tipicamente ocorre na Mecânica Quântica), etc. Um certo cuidado aqui é necessário. Para a imposição de condições de contorno ou subsidiárias às soluções particulares da forma de um produto $X(x)Y(y)$ é necessário que essas condições de contorno possam ser expressas separadamente como condição sobre a dependência em $x$ e sobre a dependência em $y$.
+	
+	\section{Exercícios}
+	\begin{enumerate}
+		\item Use a equação de Galerkin para determinar $a_1$ de movo que $u_1=v_1+x$ seja uma solução aproximada do problema de valor de contorno
+	\begin{equation}
+		x^2u''(x) + xu'(x)+(x^2-1)u(x)=0, \hspace{1cm} u(1)=1, \hspace{1cm} u(2)=2
+		\label{eqe:1}
+	\end{equation}
+	Para a primeira aproximação tome $v_1=a_1\phi_1=a_1(x-2)(x-1)$. Primeiramente, use na equação~(\ref{eqe:1}) a mudança de variável $u=v+x$. Compare graficamente o resultado obtido com a função $u(x)=3.60756J_1(x)+0.75229Y_1(x)$, onde $J_1(x)$ e $Y_1(x)$ são respectivamente as funções de Bessel de primeira e segunda espécie de ordem um.
+	
+		\item Considere a equação de quarta ordem
+	\begin{equation}
+		bu(x)-kx+(2l+x)u^{(4)}(x)+2u^{(3)}(x) = 0, \hspace{1cm}0<x<l,
+		\label{eqe:2}
+	\end{equation}
+	com as condições de contorno
+	\begin{equation}
+		u(l) = u'(l)=0,\hspace{1cm} (2l+x)u''(0)=0, \hspace{1cm} (2l+x)u^{(3)}(0)+u''(0)=0
+		\label{eqe:3}
+	\end{equation}
+	Verifique que as funções teste
+	\begin{equation}
+		\phi_1(x) = (x-l)^2(3l^2+2lx+x^2), \hspace{1cm} \phi_2(x)=(x-l)^3(3l^2+4lx+3x^2)
+		\label{eqe:4}
+	\end{equation}
+	satisfazem às condições de contorno~(\ref{eqe:3}).
+	
+		\item Use a equação de Galerkin para determinar $a_1$ de modo que $u_1=a_1\phi_1(x)$ seja uma solução aproximada do problema de valor de contorno (\ref{eqe:2})-(\ref{eqe:3}). Use a função $\phi_1(x)$ dada em~(\ref{eqe:4}). Adote os seguintes parâmetros: $l=b=1$, e $k=3$.
+	
+		\item Use a equação de Galerkin para determinar $c_1$ e $c_2$ de modo que $u_2=c_1\phi_1(x)+c_2\phi_2(x)$ seja uma solução aproximada do problema do valor de contorno (\ref{eqe:2})-(\ref{eqe:3}). Use as funções $\phi_1(x)$ e $\phi_2(x)$ dadas em (\ref{eqe:4}). Adote os seguintes parâmetros: $l=b=1$ e $k=3$. Compara $u_2$ com $u_1$ obtido no exercício anterior.
+	\end{enumerate}
+\end{document}
