@@ -147,8 +147,8 @@
 	\begin{align*}
 		\alpha  &= \frac{c\frac{a^3b^3}{36}}{\frac{a^5b^3}{90} + \frac{a^3b^5}{90}}\\
 		&= c\frac{a^3b^3}{36}\frac{90}{a^5b^3+a^3b^5}\\
-		&= c\frac{a^3b^3}{3}\frac{5}{a^3b^3(a^2+b^2)}\\
-		&= \frac{5c}{3(a^2+b^2)}
+		&= c\frac{a^3b^3}{2}\frac{5}{a^3b^3(a^2+b^2)}\\
+		&= \frac{5c}{2(a^2+b^2)}
 	\end{align*}
 	
 	\subsection{Exercício 2}
@@ -160,17 +160,13 @@
 	\end{align*}
 	Usando este resultado na equação~\ref{eq:3}, temos:
 	\begin{align*}
-		\int_\Omega \left(\nabla^2\tilde{u}-p\right)\cdot v\,d\Omega &= \int_0^b \int_0^a \left\{-\sum_{i,k=1}^N\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)\alpha_{ik}\sin{\frac{i\pi x}{a}}\sin{\frac{k\pi y}{b}} + c\right\} \left[ \sum_{i,k=1}^N\sin{\frac{i\pi x}{a}}\sin{\frac{k\pi y}{b}} \right] \,dx\,dy\\
-&= \int_0^b \int_0^a \left\{-\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)\alpha_{ik}\sin{\frac{i\pi x}{a}}\sin{\frac{k\pi y}{b}} + c\right\} \left[ \sin{\frac{i\pi x}{a}}\sin{\frac{k\pi y}{b}} \right] \,dx\,dy\\
-&= -\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)\alpha_{ik}\int_0^b \int_0^a \sin^2{\frac{i\pi x}{a}}\sin^2{\frac{k\pi y}{b}}\,dx\,dy + c \int_0^b \int_0^a \sin{\frac{i\pi x}{a}}\sin{\frac{k\pi y}{b}} \,dx\,dy\\
-&= -\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)\alpha_{ik}\int_0^b \sin^2{\frac{k\pi y}{b}}\left[\frac{a}{2\pi i}\left(\theta + \sin{\theta}\cos{\theta}\right)\right]_0^{\pi i}\,dy - c \int_0^b\sin{\frac{k\pi y}{b}}\left[\cos{\theta}\right]_0^{\pi i}\,dy\\
-&= -\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)\alpha_{ik} \frac{a}{2} \int_0^b \sin^2{\frac{k\pi y}{b}}\,dy - c \cos{\pi i} \int_0^b\sin{\frac{k\pi y}{b}}\,dy\\
-&= -\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)\alpha_{ik} \frac{ab}{4}+ c \cos{\pi i}\cos{\pi k}\\
+		\int_\Omega \left(\nabla^2\tilde{u}-p\right)\cdot v\,d\Omega &= \int_0^b \int_0^a \left\{-\sum_{i,k=1}^N\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)\alpha_{ik}\sin{\frac{i\pi x}{a}}\sin{\frac{k\pi y}{b}} + c\right\} \left[ \sin{\frac{j\pi x}{a}}\sin{\frac{m\pi y}{b}} \right] \,dx\,dy\\
+&=-\sum_{i,k=1}^N\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)\alpha_{ik}\int_0^b \int_0^a \sin{\frac{i\pi x}{a}}\sin{\frac{k\pi y}{b}}\sin{\frac{j\pi x}{a}}\sin{\frac{m\pi y}{b}} + c \left[ \sin{\frac{j\pi x}{a}}\sin{\frac{m\pi y}{b}} \right] \,dx\,dy\\
+&= -\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)\alpha_{ik} \frac{ab}{4} + c \int_0^b \int_0^a \sin{\frac{i\pi x}{a}}\sin{\frac{k\pi y}{b}} \,dx\,dy\\
+&= -\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)\alpha_{ik}\frac{ab}{4} - c \frac{a}{\pi i} \int_0^b\sin{\frac{k\pi y}{b}}\left[\cos{\theta}\right]_0^{\pi i}\,dy\\
+&= -\frac{\pi^2(b^2i^2+a^2k^2)\alpha_{ik}}{4ab} + c \frac{ab}{\pi^2 ik} (\cos{(\pi i)}-1)(\cos{(\pi k)}-1)\\
 &= 0
 	\end{align*}
-	Isolando $\alpha$, temos:
-	\begin{align*}
-		\alpha_{ik}  &= \frac{c \cos{\pi i}\cos{\pi k}}{\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)\frac{ab}{4}}\\
-		&= \frac{4c}{ab}\cdot\frac{\cos{(\pi i)}\cos{(\pi k)}}{\pi^2\left(\frac{i^2}{a^2}+\frac{k^2}{b^2}\right)}\\
-	\end{align*}
+	Isolando $\alpha_{ik}$, temos:
+	\[\alpha_{ik}  = \frac{4a^2b^2c\,(\cos{(\pi i)}-1)(\cos{(\pi k)}-1)}{ik\pi^4(b^2i^2+a^2k^2)}\]
 \end{document}
