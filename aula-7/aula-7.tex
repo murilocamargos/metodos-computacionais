@@ -18,6 +18,7 @@
 \newcommand{\col}[1]{\left[#1\right]}
 \newcommand{\chv}[1]{\left\{#1\right\}}
 \newcommand{\hgf}[4]{\prescript{}{2}{F}_1\left(#1,#2,#3,#4\right)}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 \author{Murilo Camargos}
 \title{Métodos Computacionais - Aula 7}
@@ -80,7 +81,7 @@
 			\lambda\int_a^b u_\lambda^2(x)r(x)\,dx = -\int_a^bu_\lambda(x)(pu_\lambda')'(x)\,dx - \int_a^bu_\lambda^2(x)q(x)\,dx,
 			\label{eq:3}
 		\end{equation}
-		vamos agora integrar por partes a primeira integral. Temos: \[\int_a^bu\lambda(x)(pu_\lambda')'(x)\,dx = \left. (pu_\lambda u_\lambda')(x) \right|_a^b - \int_a^b(u_\lambda'(x))^2p(x)\,dx,\] substituindo em (\ref{eq:3}), tem-se: \[\lambda\int_a^b u_\lambda^2(x)r(x)\,dx = \int_a^b\left[(u_\lambda'(x))^2p(x)-u_\lambda^2(x)q(x)\right]\,dx + \left[p(a)u_\lambda(a)u_\lambda'(a)-p(b)u_\lambda(b)u_\lambda'(b)\right],\]
+		vamos agora integrar por partes a primeira integral. Temos: \[\int_a^bu_\lambda(x)(pu_\lambda')'(x)\,dx = \left. (pu_\lambda u_\lambda')(x) \right|_a^b - \int_a^b(u_\lambda'(x))^2p(x)\,dx,\] substituindo em (\ref{eq:3}), tem-se: \[\lambda\int_a^b u_\lambda^2(x)r(x)\,dx = \int_a^b\left[(u_\lambda'(x))^2p(x)-u_\lambda^2(x)q(x)\right]\,dx + \left[p(a)u_\lambda(a)u_\lambda'(a)-p(b)u_\lambda(b)u_\lambda'(b)\right],\]
 		o que permite escrever:
 		\begin{equation}
 			\lambda = \frac{\int_a^b\left[(u_\lambda'(x))^2p(x)-u_\lambda^2(x)q(x)\right]\,dx + \left[p(a)u_\lambda(a)u_\lambda'(a)-p(b)u_\lambda(b)u_\lambda'(b)\right]}{\int_a^b u_\lambda^2(x)r(x)\,dx}
@@ -88,4 +89,44 @@
 		\end{equation}
 		O lado direito de (\ref{eq:4}) é denominado quociente de Rayleigh e desempenha um papel importante na análise de propriedades dos autovalores de problemas de Sturm--Liouville regulares. O quociente de Rayleigh (\ref{eq:4}) é também usado para a determinação aproximada de autovalores a partir de aproximantes para as autofunções, de particular utilidade quando as soluções de problema de Sturm--Liouville não puderem ser obtidas de forma explícita. No exercício 1, da lista para amanhã, ilustramos em uma solução simples como esse cálculo aproximado de autovalores pode ser feito.
 	\end{itemize}
+	
+	\section{Exercícios}
+	Para cada caso da Tabela~\ref{tbl:1}, encontre os autovalores e autofunções associadas do Problema de Sturm--Liouville regular:
+	\[u''(x)+\lambda u(x)=0, \hspace{.3cm} 0<x<L, \hspace{.3cm} \beta_1u'(0)+\alpha_1u(0)=0, \hspace{.3cm}\beta_2u'(L)+\alpha_2 u(L)=0\]
+	
+\begin{table}[!ht]
+\centering
+\label{tbl:1}
+\begin{tabular}{lll}
+ \hline
+ & em $x=0$ & em $x=L$\\
+ \hline
+ 1 & Dirichlet & Dirichlet\\
+   & $\alpha_1\neq 0,\,\beta_1=0$ & $\alpha_2\neq 0,\,\beta_2=0$\\ 
+ 2 & Dirichlet & Neumann\\
+   & $\alpha_1\neq 0,\,\beta_1=0$ & $\alpha_2=0,\,\beta_2\neq 0$\\ 
+ 3 & Dirichlet & Robin\\
+   & $\alpha_1\neq 0,\,\beta_1=0$ & $\alpha_2\neq 0,\,\beta_2\neq0$\\ 
+   
+ 4 & Neumann & Dirichlet\\
+   & $\alpha_2=0,\,\beta_2\neq 0$ & $\alpha_2\neq 0,\,\beta_2=0$\\ 
+ 5 & Neumann & Neumann\\
+   & $\alpha_2=0,\,\beta_2\neq 0$ & $\alpha_2=0,\,\beta_2\neq 0$\\ 
+ 6 & Neumann & Robin\\
+   & $\alpha_2=0,\,\beta_2\neq 0$ & $\alpha_2\neq 0,\,\beta_2\neq0$\\
+   
+ 7 & Robin & Dirichlet\\
+   & $\alpha_2\neq 0,\,\beta_2\neq0$ & $\alpha_2\neq 0,\,\beta_2=0$\\ 
+ 8 & Robin & Neumann\\
+   & $\alpha_2\neq 0,\,\beta_2\neq0$ & $\alpha_2=0,\,\beta_2\neq 0$\\ 
+ 9 & Robin & Robin\\
+   & $\alpha_2\neq 0,\,\beta_2\neq0$ & $\alpha_2\neq 0,\,\beta_2\neq0$\\ 
+ \hline
+\end{tabular}
+\caption{Condições de contorno}
+\end{table}
+
+Determine também, em cada caso, a norma quadrada:
+\[\norm{u_\lambda}^2 = \int_0^L u_\lambda^2(x)\,dx\]
+
 \end{document}
