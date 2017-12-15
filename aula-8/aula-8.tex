@@ -1,0 +1,119 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{esint}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\newcommand{\prt}[1]{\left(#1\right)}
+\newcommand{\col}[1]{\left[#1\right]}
+\newcommand{\chv}[1]{\left\{#1\right\}}
+\newcommand{\hgf}[4]{\prescript{}{2}{F}_1\left(#1,#2,#3,#4\right)}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\let\oldcos\cos
+\let\oldsin\sin
+\renewcommand{\cos}[1]{\oldcos{\prt{#1}}}
+\renewcommand{\sin}[1]{\oldsin{\prt{#1}}}
+
+\author{Murilo Camargos}
+\title{Métodos Computacionais - Aula 8}
+\begin{document}
+\lstset{extendedchars=true, inputencoding=latin1,literate=
+{á}{{\'a}}1
+{à}{{\`a}}1
+{ã}{{\~a}}1
+{é}{{\'e}}1
+{ê}{{\^e}}1
+{í}{{\'i}}1
+{ó}{{\'o}}1
+{õ}{{\~o}}1
+{ú}{{\'u}}1
+{ü}{{\"u}}1
+{ç}{{\c{c}}}1}
+\lstset{language=Matlab,%
+    %basicstyle=\color{red},
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},
+    extendedchars=true,
+    inputencoding=latin1, 
+}
+
+	\section{Funções de Bessel de Primeira Ordem}
+	
+	Seja a equação de Bessel de ordem $v$ (real ou complexo) dada por:
+	\begin{equation}
+		x^2y''(x) + xy'(x) + (x^2-v^2)y(x)=0,
+		\label{eq:1}
+	\end{equation}
+	ou, equivalentemente, $x(xy'(x))' + (x^2-v^2)y(x)=0$. Uma solução em termos de séries de potências pode ser obtida tomando-se (método de Frobenius):
+	\begin{equation}
+		y(x)=\sum_{n=0}^\infty a_nx^{s+n}.
+		\label{eq:2}
+	\end{equation}
+	Substituindo-se $y$ por esta série na equação de Bessel, obtemos a seguinte equação indicial:
+	\begin{equation}
+		s^2-v^2=0 \hspace{0.5cm} \text{ou} \hspace{0.5cm} s = \pm v
+	\end{equation}
+	O coeficiente $a_1=0$ e todos os coeficientes de índice ímpares são nulos. Os coeficientes de índices pares são obtidos pela relação:
+	\begin{equation}
+		a_n = -\frac{a_{n-2}}{(n+s)^2-v^2}\hspace{0.3cm} (n\geq 2),
+	\end{equation}
+	e todo coeficiente de índice par pode ser obtido em termos de $a_0$. Lembrando que $\Gamma(v+1) = v\Gamma(v)$, os coeficientes podem ser escrito para $s=+v$:
+	\[a_2=-\frac{a_0\Gamma(1+v)}{1!2^2\Gamma(2+v)}, \hspace{0.2cm} a_4=\frac{a_0\Gamma(1+v)}{2!2^4\Gamma(3+v)}, \hspace{0.2cm} a_6=-\frac{a_0\Gamma(1+v)}{3!2^6\Gamma(4+v)}, \hspace{.2cm} a_{2n}=-\frac{(-1)^na_0\Gamma(1+v)}{n!2^{2n}\Gamma(n+1+v)},\]
+	e a série solução é da forma:
+	\[y = a_0x^v\Gamma(1+v)\left\{\frac{1}{\Gamma(1+v)}-\frac{1}{\Gamma(2+v)}\left(\frac{x}{2}\right)^2+\dots\right\},\]
+	ou ainda
+	\[y = a_02^v\frac{x^v}{2^v}\Gamma(1+v)\chv{\frac{1}{\Gamma(1)\Gamma(1+v)}-\frac{1}{\Gamma(2)\Gamma(2+v)}\prt{\frac{x}{2}}^2+\dots},\]
+	pois $\Gamma(1)=\Gamma(2)=1$. Se tomarmos
+	\[a_0=\frac{1}{2^v\Gamma(1+v),}\]
+	a série solução da equação de Bessel de ordem $v$ assume a forma:
+	\[y = \frac{1}{\Gamma(1)\Gamma(1+v)}\prt{\frac{x}{2}}^v - \frac{1}{\Gamma(2)\Gamma(2+v)}\prt{\frac{x}{2}}^{v+2} + \frac{1}{\Gamma(3)\Gamma(3+v)}\prt{\frac{x}{2}}^{v+4}+\dots\]
+	e se denomina função de Bessel de primeira espécie de ordem $v$ e é indicada por $J_v(x)$, isto é,
+	\begin{equation}
+		J_v(x)=\sum_{n=0}^\infty \frac{(-1)^n}{n!\Gamma(n+v+1)}\prt{\frac{x}{2}}^{2n+v}.
+	\end{equation}
+	
+	Se $v$ é um inteiro negativo, esta série não é definida pois $\Gamma(v)$ é infinita para inteiros negativos. Quando $v$ é não-inteiro, a segunda solução da equação de Bessel pode ser obtida pelo método de Frobenius, tomando-se $s=-v$. A série solução será então:
+	\begin{equation}
+		J_{-v}(x) = \sum_{n=0}^\infty \frac{(-1)^n}{n!\Gamma(n-v+1)}\prt{\frac{x}{2}}^{2n-v}.
+	\end{equation}
+	
+	Quando $v$ pe não-inteiro, $J_v$ e $J_{-v}$ são duas soluções linearmente independentes da equação de Besselm, e temos a solução geral:
+	\[y(x) = c_1J_v(x) + c_2J_{-v}(x).\]
+	Se $v>0$, então $J_{-v}$ diverge na origem. Porém, quando $v$ é um inteiro $v=m$, $J_v$ e $J_{-v}$ são linearmente dependentes; mais precisamente, $J_{-m}(x)=(-1)^mJ_m(x)$.
+	
+	\section{Funções de Bessel de Segunda Espécie}
+	Consideremos a função $Y_v$ definida por:
+	\begin{equation}
+		Y_v = \frac{J_v(x)\cos{v\pi}-J_{-v}(x)}{\sin{v\pi}},
+		\label{eq:2.1}
+	\end{equation}
+	que é, obviamente, solução da equação de Bessel de ordem $v$ (para $v$ não-inteiro), pois é uma combinação linear das soluções. A expressão do lado direito de (\ref{eq:2.1}) é indeterminada quando $v=n$ (inteiro). Se calcularmos o $\lim_{v\rightarrow n}Y_v(x)$, obtermos
+	\[Y_n = \lim_{v\rightarrow n} Y_v(x) = \frac{1}{pi}\chv{\frac{\partial J_v(x)}{\partial v} -(-1)^n \frac{\partial J_{-v}(x)}{\partial v}}_{n=v}.\]
+	As funções $Y_v(x)$ e $Y_n(x)$ são denominadas funções de Bessel de segunda espécie, ou funções de Neumann. É possível mostrar que a função $Y_n(x)$ obtida como $\lim_{v\rightarrow n} Y_v(x)$ é solução da equação de Bessel de ordem $n$. Assim, a solução mais geral para qualquer $v$ (inteiro ou não) pode ser escrita como:
+	\[y(x) = AJ_v(x) + BY_v(x).\]
+	As funções $J_v$ e $Y_v$ são linearmente independentes, inclusive para $v=n$. Para comprovar este fato, calcule o Wronskiano $W(J_n,Y_n)$ e obtenha $W(J_n,Y_n)=\frac{2}{x\pi}$. Verifique também que $Y_{-n}(x)=(-1)^nY_n(x)$. Assim, toda solução da equação (\ref{eq:1}) para $v=n$ é da forma:
+	\[AJ_n(x) + BY_n(x)\]
+
+\end{document}
