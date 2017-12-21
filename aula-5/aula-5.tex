@@ -169,4 +169,29 @@
 	\end{align*}
 	Isolando $\alpha_{ik}$, temos:
 	\[\alpha_{ik}  = \frac{4a^2b^2c\,(\cos{(\pi i)}-1)(\cos{(\pi k)}-1)}{ik\pi^4(b^2i^2+a^2k^2)}\]
+	
+	\subsection{Exercício 3}
+	Este exercício foi feito com o auxílio do Mathematica.
+	Calculando o Laplaciano de $\tilde{u}(x,y)$ temos:
+	\begin{align*}
+		\Delta \tilde{u}(x,y) &= (k-1) k (x-a) (y-b) x^{k-2} y^m \alpha_{km}+(m-1) m (x-a) (y-b) x^k y^{m-2} \alpha_{km} \hspace{0.5cm}\cdots\\
+		& +2 m (x-a) x^k y^{m-1} \alpha_{km}+2 k (y-b) x^{k-1} y^m \alpha_{km}\\
+	\end{align*}
+	
+	Usando este resultado na equação~\ref{eq:3}, temos:
+	\begin{align*}
+		\int_\Omega \left(\nabla^2\tilde{u}-p\right)\cdot v\,d\Omega &= -\frac{N}{D}
+	\end{align*}
+	
+	em que:
+	\begin{align*}
+		N &= a^{k+1} b^{m+1} \left\{a b c \left(8 k^3+12 k^2-2 k-3\right) \left(8 m^3+12 m^2-2 m-3\right)\right.\hspace{0.5cm}\cdots\\
+		& \left.-(k+2) (m+2) a^k b^m \alpha_{km} \left[a^2 (2 k-1) m \left(2 m^2+5 m+3\right)+b^2 k \left(2 k^2+5 k+3\right) (2 m-1)\right]\right\}
+	\end{align*}
+	\begin{align*}
+		D &= (k+1) (k+2) (2 k-1) (2 k+1) (2 k+3) \left(8 m^5+36 m^4+50 m^3+15 m^2-13 m-6\right)
+	\end{align*}
+	
+	Isolando $\alpha_{km}$, temos:
+	\[\alpha_{km}  = \frac{c \left(8 k^3+12 k^2-2 k-3\right) \left(8 m^3+12 m^2-2 m-3\right) a^{1-k} b^{1-m}}{(k+2) (m+2) \left(a^2 (2 k-1) m \left(2 m^2+5 m+3\right)+b^2 k \left(2 k^2+5 k+3\right) (2 m-1)\right)}\]	
 \end{document}
