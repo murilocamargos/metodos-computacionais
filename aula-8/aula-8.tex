@@ -115,5 +115,20 @@
 	\[y(x) = AJ_v(x) + BY_v(x).\]
 	As funções $J_v$ e $Y_v$ são linearmente independentes, inclusive para $v=n$. Para comprovar este fato, calcule o Wronskiano $W(J_n,Y_n)$ e obtenha $W(J_n,Y_n)=\frac{2}{x\pi}$. Verifique também que $Y_{-n}(x)=(-1)^nY_n(x)$. Assim, toda solução da equação (\ref{eq:1}) para $v=n$ é da forma:
 	\[AJ_n(x) + BY_n(x)\]
+	
+	\section{Resolução}
+	Todos os exercícios foram resolvidos no Matemática.
+	\subsection*{Exercício 1}
+	\begin{itemize}
+		\item \textbf{Dirichlet}. \[y(x)= \frac{c_1 Y_n(a \alpha ) J_n(x \alpha )-c_1 J_n(a \alpha ) Y_n(x \alpha )}{Y_n(a \alpha )}\]
+		\item \textbf{Neummann}. \[y(x)= \frac{c_1 Y_{n-1}(a \alpha ) J_n(x \alpha )-c_1 J_{n-1}(a \alpha ) Y_n(x \alpha )+c_1 J_{n+1}(a \alpha ) Y_n(x \alpha )-c_1 Y_{n+1}(a \alpha ) J_n(x \alpha )}{Y_{n-1}(a \alpha )-Y_{n+1}(a \alpha )}\]
+		\item \textbf{Robin}. \[y(x)= \frac{N}{2 h Y_n(a \alpha )+\alpha  Y_{n-1}(a \alpha )-\alpha  Y_{n+1}(a \alpha )},\]
+		com
+		\begin{align*}
+			N &= 2 c_1 h Y_n(a \alpha ) J_n(x \alpha )-2 c_1 h J_n(a \alpha ) Y_n(x \alpha )+\alpha  c_1 Y_{n-1}(a \alpha ) J_n(x \alpha )\\
+			&-\alpha  c_1 J_{n-1}(a \alpha ) Y_n(x \alpha )+\alpha  c_1 J_{n+1}(a \alpha ) Y_n(x \alpha )-\alpha  c_1 Y_{n+1}(a \alpha ) J_n(x \alpha )
+		\end{align*}
+	\end{itemize}
+	
 
 \end{document}
