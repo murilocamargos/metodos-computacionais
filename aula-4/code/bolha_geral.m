@@ -11,9 +11,9 @@ el = 4.275051939160018;         % Energia do líquido
 ev = 1.7699955011416335;        % Energia do vapor
 
 h = 0.01;               % Passo para o método de Runge-Kutta
-x0 = [0.2 1e-7];        % Valores das condições iniciais
+x0 = [0.1 0.1];        % Valores das condições iniciais
 tmin = 0;               % Início do intervalo
-tmax = 4.14;            % Final do intervalo
+tmax = 6.67;          % Final do intervalo
 
 %% Integrais em termos das funções hipergeométricas
 I1 = @(x) (1/5) * hg2F1(1, 5/2, 7/2, x.^2);
@@ -23,9 +23,9 @@ I4 = @(x) (2/5) * hg2F1(1, 5/4, 9/4, x.^2);
 
 %% Sistema de equações diferenciais a serem resolvidas
 % Lembrando que R'(t) = U(t) = X(2)
-f = @(t,X) [X(2) -(X(2).^2 * (I2(X(2))*(Pl+el)+4*I1(X(2))*ev) + Pl + Pv*(4*I1(X(2))*X(2)-1)) / (X(1)*(I4(X(2))*(Pl+el)*X(2)^2 + I2(X(2))*(Pl+el)+(Pv+ev)*(I1(X(2))+I3(X(2))*X(2)^2)))]; % [R;U]
+f = @(t,X) [X(2) -(X(2)^2*(I2(X(1)) * (Pl+el) + 4*I1(X(1))*ev) + Pl + Pv*(4*I1(X(1))*X(2)^2 - 1))/(X(1)*(I4(X(1))*(Pl + el)*X(2)^2 + I2(X(1))*(Pl + el) + (Pv + ev)*(I1(X(1)) + I3(X(1))*X(2)^2)))]; % [R;U]
 
-%% Resolve o sistema acima pelo método numérico e faz estimativa do tc
+%% Resolve o sistema acima pelo método numérico
 x = rk4(f, h, x0, [tmin tmax]);
 
 %% Plota resultados numérico e analítico

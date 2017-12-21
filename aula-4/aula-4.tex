@@ -95,10 +95,10 @@
 	\section{Exercícios}
 	Use o método de integração de Runge-Kutta para obter a aproximação da solução dos seguintes problemas de Cauchy\\
 	
-	1. \[R'(t)=U(t), \hspace{0.3cm} U'(t)=-\frac{R'(t)^2\col{I_2\prt{P_l+\epsilon_l} + 4I_1\epsilon_v}+P_l+P_v\prt{4I_1R'(t)^2-1}}{R(t)\col{I_4\prt{P_l+\epsilon_l}R'(t)^2+I_2\prt{P_l+epislon_l}+\prt{P_v+\epsilon_v}\prt{I_1+I_3R'(t)^2}}}\]
+	1. \[R'(t)=U(t), \hspace{0.3cm} U'(t)=-\frac{R'(t)^2\col{I_2\prt{P_l+\epsilon_l} + 4I_1\epsilon_v}+P_l+P_v\prt{4I_1R'(t)^2-1}}{R(t)\col{I_4\prt{P_l+\epsilon_l}R'(t)^2+I_2\prt{P_l+\epsilon_l}+\prt{P_v+\epsilon_v}\prt{I_1+I_3R'(t)^2}}}\]
 	\[R(0)=0.1, \hspace{.3cm} U(0)=0.1\]
 	
-	2. \[R'(t)=U(t), \hspace{0.3cm} U'(t)=-\frac{R'(t)^2\col{I_2\prt{P_l+\epsilon_l} + 4I_1\epsilon_v}+P_l+P_v\prt{4I_1R'(t)^2-1}}{R(t)\col{I_4\prt{P_l+\epsilon_l}R'(t)^2+I_2\prt{P_l+epislon_l}+\prt{P_v+\epsilon_v}\prt{I_1+I_3R'(t)^2}}}\]
+	2. \[R'(t)=U(t), \hspace{0.3cm} U'(t)=-\frac{R'(t)^2\col{I_2\prt{P_l+\epsilon_l} + 4I_1\epsilon_v}+P_l+P_v\prt{4I_1R'(t)^2-1}}{R(t)\col{I_4\prt{P_l+\epsilon_l}R'(t)^2+I_2\prt{P_l+\epsilon_l}+\prt{P_v+\epsilon_v}\prt{I_1+I_3R'(t)^2}}}\]
 	\[R(0)=0.2, \hspace{.3cm} U(0)=\frac{1}{10000000}\]
 	
 	Adote os seguintes valores para os parâmetros: $P_v=0.1595106949435665$, $P_l=0.17078553413498362$, $\epsilon_v=1.7699955011416335$ e $\epsilon_l=4.275051939160018$. Note que $U$ é a primeira derivada de $R$ com relação a $t$.
@@ -113,21 +113,21 @@
 	\section{Resolução}
 	Os testes foram feitos no Matlab e foram utilizadas as funções já criadas nos exercícios anteriores.
 	\subsection{Exercício 1}
-	Na primeira equação, por haver velocidade inicial considerável, o gráfico descreve o formato de uma parábola. Para a resolução desta questão, foi utilizado um passo igual a $0.01$ no Runge-Kutta de quarta ordem e o valor do tempo de colapso (aproximadamente \textbf{6.01}) foi encontrado por tentativa e erro.
+	Na primeira equação, por haver velocidade inicial considerável, o gráfico descreve o formato de uma parábola. Para a resolução desta questão, foi utilizado um passo igual a $0.01$ no Runge-Kutta de quarta ordem e o valor do tempo de colapso (aproximadamente \textbf{6.67}) foi encontrado por tentativa e erro.
 	
 	\begin{figure}[h!]
     \centering
-      \includegraphics[width=1\linewidth]{figures/eq1-h0-01-t-6-01.eps}
+      \includegraphics[width=1\linewidth]{figures/eq1-h0-01-t-6-67.eps}
       \caption{Raio e velocidade da bolha ao longo do tempo para o exercício 1.}
       \label{fig:raio1}
 	\end{figure}
 	
 	\subsection{Exercício 2}
-	Para a segunda equação, foi utilizado um passo também igual a $0.01$ no Runge-Kutta de quarta ordem e o valor do tempo de colapso (aproximadamente \textbf{4.14}) foi encontrado por tentativa e erro.
+	Para a segunda equação, foi utilizado um passo também igual a $0.01$ no Runge-Kutta de quarta ordem e o valor do tempo de colapso (aproximadamente \textbf{3.62}) foi encontrado por tentativa e erro.
 	
 	\begin{figure}[h!]
     \centering
-      \includegraphics[width=1\linewidth]{figures/eq2-h0-01-t-4-14.eps}
+      \includegraphics[width=1\linewidth]{figures/eq2-h0-01-t-3-62.eps}
       \caption{Raio e velocidade da bolha ao longo do tempo para o exercício 2.}
       \label{fig:raio2}
 	\end{figure}
