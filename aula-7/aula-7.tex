@@ -149,8 +149,40 @@ Podemos calcular as autofunções para cada caso da tabela inserindo as condiç�
 \begin{itemize}
 	\item \textbf{Dirichlet, Dirichlet}. temos que $\alpha_1u(0)=0\rightarrow u(0)=k_1=0$, assim, podemos reescrever $u_\lambda(x)=k_2\sin{\prt{\sqrt{\lambda}x}}$, para $k_2$ dado e um autovalor $\lambda$ que satisfaça as duas condições de contorno ao mesmo tempo. Como sabemos que $k_1=0$ para atender à primeira, podemos calcular a segunda da seguinte maneira: \[k_2\sin{\prt{\sqrt{\lambda}L}} = 0,\]
 vamos considerar o caso em que $k_2\neq 0$ para que estejamos olhando para uma solução não trivial. Assim, temos que $\sin{\prt{\sqrt{\lambda}L}} = 0$ e, portanto, \[\lambda = \prt{\frac{n\pi}{L}}^2, \hspace{1cm}n=1,2,3,\dots\]
+	\[\norm{u_\lambda}^2 = k_2^2 \left(\frac{\pi }{2}-\frac{\sin \left(2 \pi  \sqrt{\lambda }\right)}{4 \sqrt{\lambda }}\right)\]
+	
+	\begin{figure}[h!]
+    \centering
+      \includegraphics[scale=1]{figures/dd.eps}
+	\end{figure}	
+	
 	\item \textbf{Dirichlet, Neumman}. temos que $\alpha_1u(0)=0\rightarrow u(0)=k_1=0$, assim, podemos reescrever $u_\lambda(x)=k_2\sin{\prt{\sqrt{\lambda}x}}$, para $k_2$ dado e um autovalor $\lambda$ que satisfaça as duas condições de contorno ao mesmo tempo. Como sabemos que $k_1=0$ para atender à primeira, podemos calcular a segunda da seguinte maneira: \[\sqrt{\lambda}k_2\cos{\prt{\sqrt{\lambda}L}} = 0,\]
 vamos considerar o caso em que $k_2,\lambda\neq 0$ para que estejamos olhando para uma solução não trivial. Assim, temos que $\cos{\prt{\sqrt{\lambda}L}} = 0$ e, portanto, \[\lambda = \prt{\frac{(2n-1)\pi}{2L}}^2, \hspace{1cm}n=1,2,3,\dots\]
+
+	\[\norm{u_\lambda}^2 = k_2^2 \left(\frac{\pi }{2}-\frac{\sin \left(2 \pi  \sqrt{\lambda }\right)}{4 \sqrt{\lambda }}\right)\]
+
+	\begin{figure}[h!]
+    \centering
+      \includegraphics[scale=1]{figures/dn.eps}
+	\end{figure}	
+
+	\item \textbf{Neumman, Dirichlet}. de forma análoga aos exercícios anteriores, temos que
+		\[u_\lambda(x)=k_1\cos{\prt{\sqrt{\lambda}x}}\]
+		\[\lambda = \prt{\frac{(2n-1)\pi}{2L}}^2, \hspace{1cm}n=1,2,3,\dots\]
+		\[\norm{u_\lambda}^2 =\frac{1}{4} k_2^2 \left(\frac{\sin \left(2 \pi  \sqrt{\lambda }\right)}{\sqrt{\lambda }}+2 \pi \right)\]
+	\begin{figure}[h!]
+    \centering
+      \includegraphics[scale=1]{figures/nd.eps}
+	\end{figure}	
+	
+	\item \textbf{Neumman, Neumman}
+		\[u_\lambda(x)=k_1\cos{\prt{\sqrt{\lambda}x}}\]
+		\[\lambda = \prt{\frac{n\pi}{L}}^2, \hspace{1cm}n=1,2,3,\dots\]
+		\[\norm{u_\lambda}^2 =\frac{1}{4} k_2^2 \left(\frac{\sin \left(2 \pi  \sqrt{\lambda }\right)}{\sqrt{\lambda }}+2 \pi \right)\]
+	\begin{figure}[h!]
+    \centering
+      \includegraphics[scale=1]{figures/nn.eps}
+	\end{figure}	
 \end{itemize}
 
 \end{document}
