@@ -10,6 +10,7 @@
 \usepackage{graphicx}
 \usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
 \usepackage{listings}
+\usepackage{subcaption}
 \usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
 \definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
 \definecolor{mylilas}{RGB}{170,55,241}
@@ -131,6 +132,86 @@
 	
 		\item Use a equação de Galerkin para determinar $a_1$ de modo que $u_1=a_1\phi_1(x)$ seja uma solução aproximada do problema de valor de contorno (\ref{eqe:2})-(\ref{eqe:3}). Use a função $\phi_1(x)$ dada em~(\ref{eqe:4}). Adote os seguintes parâmetros: $l=b=1$, e $k=3$.
 	
-		\item Use a equação de Galerkin para determinar $c_1$ e $c_2$ de modo que $u_2=c_1\phi_1(x)+c_2\phi_2(x)$ seja uma solução aproximada do problema do valor de contorno (\ref{eqe:2})-(\ref{eqe:3}). Use as funções $\phi_1(x)$ e $\phi_2(x)$ dadas em (\ref{eqe:4}). Adote os seguintes parâmetros: $l=b=1$ e $k=3$. Compara $u_2$ com $u_1$ obtido no exercício anterior.
+		\item Use a equação de Galerkin para determinar $c_1$ e $c_2$ de modo que $u_2=c_1\phi_1(x)+c_2\phi_2(x)$ seja uma solução aproximada do problema do valor de contorno (\ref{eqe:2})-(\ref{eqe:3}). Use as funções $\phi_1(x)$ e $\phi_2(x)$ dadas em (\ref{eqe:4}). Adote os seguintes parâmetros: $l=b=1$ e $k=3$. Compare $u_2$ com $u_1$ obtido no exercício anterior.
 	\end{enumerate}
+	
+	\section{Resolução}
+	Todos os exercícios foram resolvidos utilizando o Mathematica.
+	\subsection*{Exercício 1}
+	Fazendo as substituições necessárias, o novo problema a ser resolvido é:
+	\[-2 a + 5 a x^2 + x^3 - 3 a x^3 + a x^4 = 0\]
+	Resolvendo a integral de Galerkin com $x$ variando de 1 a 2, temos:
+	\begin{align*}
+		\int_\Omega \left(\nabla^2\tilde{u}-p\right)\cdot v\,d\Omega &= -\frac{311 a}{420}-\frac{3}{5}\\
+		&= 0
+	\end{align*}
+	Resolvendo para $a$, temos:
+	\[a=-\frac{252}{311}\]
+	Os valores atualizados de $v$ e $u$ são:
+	\[u = x-\frac{252}{311} (x-2) (x-1), \hspace{1cm} v = \frac{1}{311} (-252) (x-2) (x-1)\]
+	
+	\begin{figure}[h!]
+    \centering
+      \includegraphics[scale=1]{figures/exercicio1.eps}
+	\end{figure}
+	
+	\subsection*{Exercício 2}
+	As condições para a primeira equação de teste podem ser desmembradas da seguinte maneira:
+	\begin{align*}
+		(x-l)^2 \left(3 l^2+2 l x+x^2\right) & \hspace{0.2cm}(x=l)\\
+		2 \left(3 l^2+2 l x+x^2\right) (x-l)+(2 l+2 x) (x-l)^2 & \hspace{0.2cm}(x=l)\\
+		(2 l+x) \left(2 \left(3 l^2+2 l x+x^2\right)+2 (x-l)^2+4 (2 l+2 x) (x-l)\right) & \hspace{0.2cm}(x=0)\\
+		2 \left(3 l^2+2 l x+x^2\right)+2 (x-l)^2+4 (2 l+2 x) (x-l)+(2 l+x) (12 (x-l)+6 (2 l+2 x)) & \hspace{0.2cm}(x=0)
+	\end{align*}
+	Fazendo as substituições, encontramos que todas elas dão \textbf{zero}, fazendo com que as condições de contorno sejam satisfeitas para essa equação de teste. Para a segunda, temos a mesma coisa; ela também satisfaz às condições dadas. Para verificar, basta executar o notebook do Mathematica referente a este exercício.
+	
+	\subsection*{Exercício 3}
+	Fazendo as substituições necessárias, o novo problema a ser resolvido é:
+	\[51 a - 2 x + 68 a x + a x^4 = 0\]
+	Resolvendo a integral de Galerkin com $x$ variando de 0 a $l$, temos:
+	\begin{align*}
+		\int_\Omega \left(\nabla^2\tilde{u}-p\right)\cdot v\,d\Omega &= \frac{3776 a}{45}-\frac{2}{3}\\
+		&= 0
+	\end{align*}
+	Resolvendo para $a$, temos:
+	\[a=\frac{15}{1888}\]
+	Os valores atualizados de $v$ e $u$ são:
+	\[u = \frac{15 \left(x^2+2 x+3\right) (x-1)^2}{1888}+x, \hspace{1cm} v = \frac{15 (x-1)^2 \left(x^2+2 x+3\right)}{1888}\]
+	
+	\begin{figure}[h!]
+    \centering
+      \includegraphics[scale=1]{figures/exercicio3.eps}
+	\end{figure}
+	
+	\subsection*{Exercício 4}
+	Fazendo as substituições necessárias, o novo problema a ser resolvido é:
+	\[3 c_1 x^5-5 c_1 x^4+c_2 x^4+720 c_1 x^2+365 c_1 x+68 c_2 x-243 c_1+51 c_2-2 x = 0\]
+	Resolvendo as integrais de Galerkin com $x$ variando de 0 a $l$, temos:
+	\begin{align*}
+		\int_\Omega \left(\nabla^2\tilde{u}-p\right)\cdot v\,d\Omega &= \frac{63674 c_1}{693}-\frac{21172 c_2}{315}+\frac{10}{21}\\
+		&= 0
+	\end{align*}
+	\begin{align*}
+		\int_\Omega \left(\nabla^2\tilde{u}-p\right)\cdot v\,d\Omega &= -\frac{21172 c_1}{315}+\frac{3776 c_2}{45}-\frac{2}{3}\\
+		&= 0
+	\end{align*}
+	Resolvendo para $c_1$ e $c_2$, temos:
+	\[c_1=\frac{73535}{48393978}\hspace{1cm}c_2=\frac{11225}{1225164}\]
+	Os valores atualizados de $u$ são:
+	\[u = \frac{73535 \left(3 x^2+4 x+3\right) (x-1)^3}{48393978}+\frac{11225 \left(x^2+2 x+3\right) (x-1)^2}{1225164}+x)\]
+	
+\begin{figure}[h!]
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{figures/exercicio3.eps}
+    \caption{Figura desse exercício}
+    \label{fig:1}
+  \end{subfigure}
+  %
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{figures/exercicio4comp.eps}
+    \caption{Comparação com o exercício anterior}
+    \label{fig:2}
+  \end{subfigure}
+\end{figure}
+
 \end{document}
